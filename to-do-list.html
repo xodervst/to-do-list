@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>    
+
+    <style>
+
+        .tasks li{
+            cursor: pointer;
+            padding-left: 10px;
+            margin-top: 5px;
+        }
+        .tasks li i{
+            color: black;
+            padding-right: 2px;
+            cursor: pointer;
+        }
+        h4{
+            border: 1px grey solid;
+            border-width: 2px;
+            padding: 5px;
+            margin-bottom: 0px;
+        }
+
+        .done{
+            text-decoration: line-through;
+            background-color: red !important;
+            color: white;
+        }
+
+        .undone{
+            text-decoration: none;
+            background-color: green !important;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h4 class="text-center"> To Do List</h4>
+        <ul class="card tasks pl-5 pr-5 pt-1">
+            
+        </ul>
+    </div>
+    <div class="container mt-1">
+        <div class="form-group">
+            <input type="text" name="list-item" class="form-control float-left" style="width: 90%;" id="list-item" placeholder="Enter item here..." autofocus=""/>
+            <button class="btn btn-primary float-left ml-2" id="add-item">Add</button>
+        </div>
+    </div>
+    
+</body>
+<script src="../js/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+    function done(elem){
+        var status= $(elem).data("status");
+        if(status==0){
+            $(elem).data("status",1);
+            $(elem).addClass("done");
+            $(elem).removeClass("undone");
+        }
+        else{
+            $(elem).data("status",0).addClass("undone").removeClass("done");
+        }
+    }
+
+    $("ul").on('click','.remove-item',   //to target class remove under t body
+        function(){
+            $(this).parent().remove(); 
+            
+    }    );
+
+    $("#add-item").on('click', function(){
+        var item=$("input").val();
+        if(item != ""){
+            var newitem='<li class="undone" data-status="0" onclick="done(this)">'+item+'<i class="float-right fa fa-close remove-item"></i></li>'
+            $("ul").append(newitem);
+            $("input").val("");
+        }
+    });
+
+    $("input").keyup(
+        function(event){
+            if(event.which==13){
+                var item=$("input").val();
+                if(item != ""){
+                    var newitem='<li class="undone" data-status="0" onclick="done(this)">'+item+'<i class="float-right fa fa-close remove-item" style="float-top:5px"></i></li>'
+                    $("ul").append(newitem);
+                    $("input").val("");
+                }
+            }
+        }
+    );
+
+
+</script>
+</html>
